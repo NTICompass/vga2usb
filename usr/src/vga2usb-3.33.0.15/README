@@ -1,0 +1,78 @@
+VGA2USB Driver for Linux
+------------------------
+
+
+Overview
+--------
+
+This package contains source code and binary modules required to build
+the driver.  Proprietary and closed source part of the driver provided
+in form of precompiled object files. During the build process open
+source part will be compiled and linked with the proprietary code to
+form loadable kernel module.
+
+
+Requirements
+------------
+
+Kernel:
+2.6.x and 3.x kernels are supported.
+In order to successfully load module kernel should include support for
+USB 2.0.
+
+Kernel source tree:
+To successfully compile the driver, kernel source tree has to be
+installed and configured to match currently running kernel.
+
+Compilation
+-----------
+
+Before compiling kernel verify or change the following:
+1) For Redhat and Fedora Core 1 kernels uncomment KMARKER definition in the
+   Config.mak
+2) Verify path to the kernel source tree in Config.mak
+
+
+Usage
+-----
+
+To load the driver run 'make load' command.
+If you want to put the driver module into the standard module directory run
+'sudo make install' command.
+
+Following device nodes are created:
+/dev/videoX   - Video4Linux/V4L2 interface
+
+/dev/vga2usbX - Epiphan proprietary interface. Provides full control
+                over framegrabber when used with Epiphan frame grabber
+                SDK
+                http://www.epiphan.com/products/frame-grabbers/vga2usb/development/
+
+/dev/epiphanaudioX - interface for controlling audio capture. (Only for devices
+                which support audio capture.)
+
+
+Please note that the driver has several parameters that can be specified at
+module load time. To list driver parameters run 'modinfo ./vga2usb.ko' command.
+Please pay attention to parameters that have "_enable" as part of their name:
+default values may not be suitable for your situation, in particular you may
+have to explicitly enable V4L2 support, for example:
+sudo insmod ./vga2usb.ko v4l2_enable=1
+
+You can try the following V4L applications
+
+mplayer -tv device=/dev/video0 tv://
+
+vlc v4l2:///dev/video0
+
+mencoder \
+        -oac lavc \
+        -ovc lavc \
+        -lavcopts vcodec=mpeg4:keyint=100:vbitrate=8000:vhq \
+        -noaspect -flip \
+        -o test.avi \
+        -tv noaudio:driver=v4l2:outfmt=bgr24:device=/dev/video0 \
+        tv://
+
+Replace /dev/video0 with appropriate device node if applicable.
+Use "v4l" instead of "v4l2" if applicable.

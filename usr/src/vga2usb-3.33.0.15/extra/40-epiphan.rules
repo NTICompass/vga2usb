@@ -1,0 +1,6 @@
+# udev rules file for Epiphan Systems Inc. framegrabbers.
+
+ACTION!="add", GOTO="epiphan_rules_end"
+KERNEL=="vga2usb[0-9]*", GROUP="video", MODE="0664", SYMLINK+="%s{id}"
+
+LABEL="epiphan_rules_end"
