@@ -1,0 +1,7 @@
+*.o
+*.ko
+*.cmd
+*.mod
+
+modules.order
+vga2usb.mod.c
