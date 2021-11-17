@@ -10,7 +10,7 @@ obj-$(CONFIG_VIDEO_VGA2USB)	:= vga2usb.o
 obj-binary := vga2usb_bins.o
 obj-binary-pathed	:= $(patsubst %,$(src)/%,$(obj-binary))
 
-vga2usb-objs = drvwrapper.o drvwrapper_lib.o $(obj-binary)
+vga2usb-objs = drvwrapper.o drvwrapper_lib.o drvwrapper_fix.o $(obj-binary)
 #LDFLAGS += $(obj-binary-pathed)
 #vga2usb-objs = drvwrapper.o
 
@@ -25,7 +25,7 @@ default: $(FSRC)
 	$(MAKE) -C $(KDIR) M=$(src) modules
 
 clean:
-	-rm -f vga2usb.o vga2usb.ko drvwrapper.o drvwrapper_lib.o
+	-rm -f vga2usb.o vga2usb.ko drvwrapper.o drvwrapper_lib.o drvwrapper_fix.o
 
 distclean:
 	-rm -f *\.o *\.ko *\.mod* \.depend \.*\.o\.flags \.*\.o\.cmd \.*\.ko\.cmd
@@ -64,6 +64,6 @@ modverline = $(shell awk '/\#define V2U_VERSION_/ {print $$3}' ../../../../inclu
 modversion  = $(subst $(space),$(dot),$(modverline))
 kver = $(shell echo ${KDIR} | awk '{ gsub("^[^0-9]*", ""); print }' | awk '{ gsub("/.*", ""); print }')
 distro: default
-	rm -fr .tmp_versions .*.cmd Module.symvers Module.markers modules.order vga2usb.mod.* drvwrapper_lib.o drvwrapper.o vga2usb.o
+	rm -fr .tmp_versions .*.cmd Module.symvers Module.markers modules.order vga2usb.mod.* drvwrapper_fix.o drvwrapper_lib.o drvwrapper.o vga2usb.o
 	tar -cjvf ../vga2usb-$(modversion)-$(kver).tbz --exclude  \*.tbz --exclude CVS --exclude .svn --exclude \*~ . ../../extra/40-epiphan.rules
 
