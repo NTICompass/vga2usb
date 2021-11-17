@@ -76,4 +76,8 @@ dma_addr_t dma_direct_map_page(struct device *dev, struct page *page, unsigned l
 void dma_direct_unmap_page(struct device *dev, dma_addr_t addr, size_t size, enum dma_data_direction dir, unsigned long attrs);
 #endif
 
+#if (LINUX_VERSION_CODE > KERNEL_VERSION(5,4,160))
+bool ex_handler_refcount(const struct exception_table_entry *fixup, struct pt_regs *regs, int trapnr, unsigned long error_code, unsigned long fault_addr);
+#endif
+
 #endif // __DRVWRAPPER_LIB_H

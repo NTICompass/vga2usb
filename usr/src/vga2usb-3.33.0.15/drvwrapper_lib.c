@@ -260,3 +260,12 @@ void dma_direct_unmap_page(struct device *dev, dma_addr_t addr, size_t size, enu
     dma_unmap_page_attrs(dev, addr, size, dir, attrs);
 }
 #endif
+
+#if (LINUX_VERSION_CODE > KERNEL_VERSION(5,4,160))
+bool ex_handler_refcount(const struct exception_table_entry *fixup, struct pt_regs *regs, int trapnr, unsigned long error_code, unsigned long fault_addr)
+{
+    return true;
+    // TODO:
+    //return ex_handler_default(fixup, regs, trapnr, error_code, fault_addr);
+}
+#endif
