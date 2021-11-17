@@ -227,7 +227,8 @@ void wrp_video_set_drvdata(struct video_device *dev, void * data) {video_set_drv
 #endif
 
 #if LINUX_VERSION_CODE > KERNEL_VERSION(5,5,19)
-void __put_devmap_managed_page(struct page *page) {
+void __put_devmap_managed_page(struct page *page)
+{
     put_devmap_managed_page(page);
 }
 #endif
