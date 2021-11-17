@@ -64,7 +64,7 @@ unsigned long wrp_wait_for_completion_timeout(struct completion *x, unsigned lon
 
 int wrp_printk(const char *fmt, ...);
 
-#if LINUX_VERSION_CODE > KERNEL_VERSION(5,5,19)
+#if (LINUX_VERSION_CODE > KERNEL_VERSION(5,5,19))
 void __put_devmap_managed_page(struct page *page);
 #endif
 
