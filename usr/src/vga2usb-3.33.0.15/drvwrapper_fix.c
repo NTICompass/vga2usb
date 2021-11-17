@@ -1,9 +1,9 @@
 #include <linux/version.h>
-#include <linux/sched.h>
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0) || LINUX_VERSION_CODE <= KERNEL_VERSION(5,8,18))
 #include <linux/dma-mapping.h>
 #endif
+
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,9,0) && LINUX_VERSION_CODE <= KERNEL_VERSION(5,9,16))
 #include <linux/dma-direct.h>
 #endif
@@ -43,7 +43,7 @@ void dma_direct_unmap_page(struct device *dev, dma_addr_t addr, size_t size, enu
 bool ex_handler_refcount(const struct exception_table_entry *fixup, struct pt_regs *regs, int trapnr, unsigned long error_code, unsigned long fault_addr)
 {
     return true;
-    // TODO:
+    // TODO
     //return ex_handler_default(fixup, regs, trapnr, error_code, fault_addr);
 }
 #endif
