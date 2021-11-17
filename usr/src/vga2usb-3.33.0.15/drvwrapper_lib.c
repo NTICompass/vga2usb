@@ -32,6 +32,15 @@
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,27))
 #include <linux/mm.h>
 #endif
+#if (LINUX_VERSION_CODE <= KERNEL_VERSION(5,8,18) || LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0))
+#include <linux/dma-mapping.h>
+#endif
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0))
+#include <linux/dma-direction.h>
+#endif
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,9,0) && LINUX_VERSION_CODE <= KERNEL_VERSION(5,9,16))
+#include <linux/dma-direct.h>
+#endif
 #include "drvwrapper_lib.h"
 
 
@@ -230,5 +239,27 @@ void wrp_video_set_drvdata(struct video_device *dev, void * data) {video_set_drv
 void __put_devmap_managed_page(struct page *page)
 {
     put_devmap_managed_page(page);
+}
+#endif
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0))
+int dma_direct_map_sg(struct device *dev, struct scatterlist *sgl, int nents, enum dma_data_direction dir, unsigned long attrs)
+{
+    return dma_map_sg_attrs(dev, sgl, nents, dir, attrs);
+}
+
+void dma_direct_unmap_sg(struct device *dev, struct scatterlist *sgl, int nents, enum dma_data_direction dir, unsigned long attrs)
+{
+    dma_unmap_sg_attrs(dev, sgl, nents, dir, attrs);
+}
+
+dma_addr_t dma_direct_map_page(struct device *dev, struct page *page, unsigned long offset, size_t size, enum dma_data_direction dir, unsigned long attrs)
+{
+    return dma_map_page_attrs(dev, page, offset, size, dir, attrs);
+}
+
+void dma_direct_unmap_page(struct device *dev, dma_addr_t addr, size_t size, enum dma_data_direction dir, unsigned long attrs)
+{
+    dma_unmap_page_attrs(dev, addr, size, dir, attrs);
 }
 #endif
