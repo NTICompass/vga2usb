@@ -32,11 +32,8 @@
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,27))
 #include <linux/mm.h>
 #endif
-#if (LINUX_VERSION_CODE <= KERNEL_VERSION(5,8,18) || LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0) || LINUX_VERSION_CODE <= KERNEL_VERSION(5,8,18))
 #include <linux/dma-mapping.h>
-#endif
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0))
-#include <linux/dma-direction.h>
 #endif
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5,9,0) && LINUX_VERSION_CODE <= KERNEL_VERSION(5,9,16))
 #include <linux/dma-direct.h>
